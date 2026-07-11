@@ -21,10 +21,14 @@ Error handling
 
 ## Installation
 python -m venv venv
-pip show python-dotenv
+pip install python-dotenv
+pip install openai
 
 Install dependencies:
 pip install -r requirements.txt
+
+OpenAI API key
+https://platform.openai.com/api-keys
 
 ## Environment Variables
 ## Run
