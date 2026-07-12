@@ -18,6 +18,7 @@ Prompt templates
 Environment variables
 File handling
 Error handling
+Traslating options
 
 ## Installation
 python -m venv venv
@@ -44,3 +45,8 @@ python app.py
 git add .
 git commit -m "Add Groq Llama integration for text summarizer"
 git push
+
+summarized
+![alt text](image.png)
+Translated 
+![alt text](image-1.png)

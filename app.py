@@ -1,9 +1,9 @@
 import os
 import sys
 from dotenv import load_dotenv
-from openai import OpenAI
-from ai_service import generate_summary
-from prompts import SHORT_SUMMARY, BULLET_SUMMARY, EXECUTIVE_SUMMARY, DETAILED_SUMMARY, EXPLAINED_SIMPLY
+from ai.service import generate_summary, translate_summary
+from datetime import datetime
+from prompts import SHORT_SUMMARY, BULLET_SUMMARY, EXECUTIVE_SUMMARY, DETAILED_SUMMARY, EXPLAINED_SIMPLY, TRANSLATE_FRENCH, TRANSLATE_JAPANESE, TRANSLATE_SPANISH
 
 load_dotenv()
 
@@ -29,12 +29,15 @@ def choose_prompt(choice):
 
 
 
-def save_summary(summary):
+def save_summary(summary, prefix="output"):
 
     os.makedirs("summaries", exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    filename = f"summaries/{prefix}_{timestamp}.txt"
 
-    with open("summaries/output.txt", "w", encoding="utf-8") as file:
+    with open(filename, "w", encoding="utf-8") as file:
         file.write(summary)
+    return filename
 
 def main():
     print("=" * 40)
@@ -65,23 +68,72 @@ def main():
     try:
         print("\nGenerating summary...")
         summary = generate_summary(prompt, text)
+        original_chars = len(text)
+        summary_chars = len(summary)
+        compression = (original_chars - summary_chars) / original_chars * 100
 
-        save_summary(summary)
+        filename = save_summary(summary)
 
-        print("\nSummary request saved successfully.")
-        print("Saved to: summaries/output.txt")
+        print("\nSummary saved successfully.")
+        print(f"Saved to: {filename}")
         print("\nSummary:\n")
 
         print(summary)
 
+        print("\nSummary Statistics:")
+        print("-" * 25)
+        print(f"original characters: {original_chars:,}")
+        print(f"summary characters : {summary_chars:,}")
+        print(f"compression : {compression:.1f}%")
+        
+        print("\nTranslate Summary?")
+        print("1. English")
+        print("2. Spanish")
+        print("3. French")
+        print("4. Japanese")
+        print("5. Skip")
+
+        language = input("\nChoice: ")
+
+        translated = None
+
+        if language == "1":
+            translated = summary
+        elif language == "2":
+            translated = translate_summary(TRANSLATE_SPANISH, summary)
+        elif language == "3":
+            translated = translate_summary(TRANSLATE_FRENCH, summary)
+        elif language == "4":
+            translated = translate_summary(TRANSLATE_JAPANESE, summary)
+        elif language == "5":
+            print("translation skipped.")
+            
+        else:
+            print("invalid choice.")
+
+        if translated:
+            print("\n========= Translated Summary =========\n")
+            print(translated)
+            print("=======================")
+            translated_filename = save_summary(translated, "translation")
+            print(f"\nTranslated summary saved to: {translated_filename}")
+
+
     except Exception as ex:
-        if "insufficient_quota" in str(ex):
+        error = str(ex).lower()
+        if "connection" in error:
+            print("Network error.")
+        
+        elif"insufficient_quota" in error:
             print("API quota exceeded. Please check billing.")
 
-        elif "invalid_api_key" in str(ex):
+        elif "invalid_api_key" in error:
             print("Invalid API key.")
+        
+        elif "invalid_request_error" in error:
+            print("Invalide_Request.")
         else:
-            print(f"Error: {ex}")
+            print(f" UnexpectedError: {ex}")
 
 
 if __name__ == "__main__":

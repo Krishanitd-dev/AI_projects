@@ -1,4 +1,5 @@
 from openai import OpenAI
+from dotenv import load_dotenv
 from config import AI_API_KEY
 import os
 
@@ -20,7 +21,26 @@ def generate_summary(prompt,text):
                 "role": "user",
                 "content": text
             }
-        ]
+        ],
+        max_tokens=300
+    )
+    return response.choices[0].message.content
+
+def translate_summary(prompt,text):
+
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {
+                "role": "system",
+                "content": prompt
+            },
+            {
+                "role": "user",
+                "content": text
+            }
+        ],
+        
     )
 
     return response.choices[0].message.content
