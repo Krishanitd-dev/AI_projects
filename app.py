@@ -1,12 +1,12 @@
 import os
+import sys
 from dotenv import load_dotenv
 from openai import OpenAI
-from prompts import SHORT_SUMMARY, BULLET_SUMMARY, EXECUTIVE_SUMMARY, AGE10_SUMMARY
+from ai_service import generate_summary
+from prompts import SHORT_SUMMARY, BULLET_SUMMARY, EXECUTIVE_SUMMARY, DETAILED_SUMMARY, EXPLAINED_SIMPLY
 
 load_dotenv()
-client = OpenAI(
-    api_key=os.getenv("AI_API_KEY")
-    )
+
 def choose_prompt(choice):
     """Return the selected prompt."""
 
@@ -15,30 +15,19 @@ def choose_prompt(choice):
     elif choice == "2":
         return BULLET_SUMMARY
     elif choice == "3":
-        return EXECUTIVE_SUMMARY
+        return DETAILED_SUMMARY
     elif choice == "4":
-        return AGE10_SUMMARY
+        return EXECUTIVE_SUMMARY
+    elif choice == "5":
+        return EXPLAINED_SIMPLY
+    elif choice == "6":
+        print("Exit")
+        sys.exit()
     else:
-        return SHORT_SUMMARY
+        print("invalid choice.")
+        sys.exit() 
 
 
-def generate_summary(prompt,text):
-
-    response = client.responses.create(
-        model="gpt-4.1-mini",
-        input=[
-            {
-                "role": "system",
-                "content": prompt
-            },
-            {
-                "role": "user",
-                "content": text
-            }
-        ]
-    )
-
-    return response.output_text
 
 def save_summary(summary):
 
@@ -55,8 +44,11 @@ def main():
     print("\nChoose summary style")
     print("1. Short Summary")
     print("2. Bullet Points")
-    print("3. Executive Summary")
-    print("4. Explain Like I'm 10")
+    print("3. Detailed Summary")
+    print("4. Executive Summary")
+    print("5. Explained Simply")
+    print("6. Exit")
+    
 
 
     choice=input("\nChoice: ")

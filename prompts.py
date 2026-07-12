@@ -16,6 +16,15 @@ Requirements:
 - Use simple English
 """
 
+DETAILED_SUMMARY = """
+Summarize the following text with detailed information.
+
+Requirements:
+- Maximum 10 bullet points
+- Keep important facts
+- Use simple English
+"""
+
 EXECUTIVE_SUMMARY = """
 Summarize the following text for a manager.
 
@@ -26,8 +35,8 @@ Requirements:
 - Maximum 150 words
 """
 
-AGE10_SUMMARY = """
-Explain the following text like I'm 10 years old.
+EXPLAINED_SIMPLY = """
+Explain the following text in very simple language suitable for a beginner.
 
 Requirements:
 - Use very simple language
