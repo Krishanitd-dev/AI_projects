@@ -13,17 +13,21 @@ Save the request to a file
 
 ## Features
 
-Multiple summary styles
+Multiple summary styles using AI
 Prompt templates
 Environment variables
 File handling
-Error handling
 Traslating options
+save every summary
+basic Error handling
 
 ## Installation
 python -m venv venv
 pip install python-dotenv
 pip install openai
+
+## Project Structure
+![alt text](image-2.png)
 
 Install dependencies:
 pip install -r requirements.txt
@@ -43,10 +47,25 @@ python app.py
 
 # Git
 git add .
-git commit -m "Add Groq Llama integration for text summarizer"
+git commit -m "Add ........"
 git push
 
+
+# Screenshots
 summarized
 ![alt text](image.png)
 Translated 
 ![alt text](image-1.png)
+
+# Future Improvements
+Support additional languages
+Export summaries as PDF or Word documents
+Process multiple files in a batch
+Add a graphical user interface (GUI)
+Add unit tests
+Allow users to choose different AI models
+Display token usage for each request
+Add configurable summary length
+Save application logs
+Support summarizing text from PDF and Word documents
+
