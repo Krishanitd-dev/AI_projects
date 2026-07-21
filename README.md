@@ -32,7 +32,7 @@ pip install openai
 Install dependencies:
 pip install -r requirements.txt
 
-# OpenAI-compatible API  - Groq's free API
+## OpenAI-compatible API  - Groq's free API
 https://console.groq.com
 api_key=os.getenv("GROQ_API_KEY")
 base_url="https://api.groq.com/openai/v1"

@@ -41,7 +41,7 @@ def save_summary(summary, prefix="output"):
 
 def main():
     print("=" * 40)
-    print("AI TEXT SUMMARIZER")
+    print("AI Text Summarizer")
     print("=" * 40)
 
     print("\nChoose summary style")
